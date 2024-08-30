@@ -66,4 +66,4 @@ Se você tiver alguma dúvida ou precisar de mais informações, entre em contat
 
 - **Nome do Mantenedor**: Matheus Carlos
 - **Email**: carlos.mnsp@gmail.com
-- **GitHub**: [seu-usuario](https://github.com/gloomage)
+- **GitHub**: [gloomage](https://github.com/gloomage)
