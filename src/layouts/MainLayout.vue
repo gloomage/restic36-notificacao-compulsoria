@@ -1,51 +1,85 @@
 <template>
-  <q-layout view="hHh Lpr lFf">
+  <q-layout view="lHh Lpr lFf">
+    <!-- HEADER -->
     <q-header elevated>
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
-
-        <q-toolbar-title style="text-align: center; text-transform: uppercase">
-          Notificação Compulsória - Preenchimento
+        <q-btn flat icon="menu" @click="leftDrawerOpen = !leftDrawerOpen" />
+        <q-toolbar-title style="font-weight: 600">
+          Gael Jorge da Rocha
         </q-toolbar-title>
+
+        <q-space />
+        <div style="display: flex; gap: 15px" class="q-pa-sm">
+          <div>
+            <q-btn round flat icon="email">
+              <q-badge color="green" floating transparent> 2 </q-badge>
+            </q-btn>
+
+            <q-btn round flat icon="notifications">
+              <q-badge color="green" floating transparent> 5 </q-badge>
+            </q-btn>
+          </div>
+          <q-btn class="toolbar-profile" flat round dense size="18px">
+            <q-badge
+              color="green"
+              rounded
+              style="margin-top: 1.8rem; margin-left: 1.8rem"
+            />
+          </q-btn>
+        </div>
       </q-toolbar>
+      <q-separator />
+      <div class="q-pa-md">
+        <div style="font-size: 1.5rem; font-weight: 600">
+          {{ $route.meta.titulo }}
+        </div>
+        <q-breadcrumbs>
+          <q-breadcrumbs-el
+            v-for="(breadcrumb, index) in breadcrumbs"
+            :key="index"
+            :label="breadcrumb"
+          />
+        </q-breadcrumbs>
+      </div>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-      <q-list>
-        <q-item-label
-          style="
-            font-size: 1rem;
-            font-weight: 600;
-            color: rgb(41, 41, 41);
-            text-align: center;
-            text-transform: uppercase;
-          "
-          class="q-pt-md"
-        >
-          Lista Nacional de Doenças
-        </q-item-label>
-        <div class="q-mx-md q-mt-sm q-mb-md">
-          <q-input standout v-model="search" dense type="search">
-            <template v-slot:append>
-              <q-icon name="search" />
-            </template>
-          </q-input>
-        </div>
+    <q-drawer
+      v-model="leftDrawerOpen"
+      show-if-above
+      :width="270"
+      :breakpoint="400"
+    >
+      <q-scroll-area
+        style="
+          height: calc(100% - 150px);
+          margin-top: 150px;
+          border-right: 1px solid #ddd;
+        "
+      >
+        <q-list padding>
+          <q-item clickable v-ripple v-for="tab in tabs" :key="tab.name">
+            <q-item-section avatar>
+              <q-icon name="inbox" />
+            </q-item-section>
 
-        <template v-for="(item, index) in lista_nacional" :key="index">
-          <q-separator spaced inset />
-          <q-item clickable v-ripple class="q-mx-sm">
-            <q-item-section>{{ item }}</q-item-section>
+            <q-item-section> {{ tab.nome }} </q-item-section>
           </q-item>
-        </template>
-      </q-list>
+        </q-list>
+      </q-scroll-area>
+
+      <q-img
+        class="absolute-top"
+        src="https://cdn.quasar.dev/img/material.png"
+        style="height: 150px"
+      >
+        <div class="absolute-bottom bg-transparent">
+          <q-avatar size="56px" class="q-mb-sm">
+            <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+          </q-avatar>
+          <div class="text-weight-bold">Razvan Stoenescu</div>
+          <div>@rstoenescu</div>
+        </div>
+      </q-img>
     </q-drawer>
 
     <q-page-container>
@@ -62,76 +96,7 @@ export default defineComponent({
     return {
       leftDrawerOpen: false,
       search: "",
-      lista_nacional: [
-        "Acidente de trabalho com exposição a material biológico",
-        "Acidente de trabalho",
-        "Acidente por animal peçonhento",
-        "Acidente por animal potencialmente transmissor da raiva",
-        "Botulismo",
-        "Cólera",
-        "Coqueluche",
-        "Covid-19",
-        "Dengue - Casos",
-        "Dengue - Óbitos",
-        "Difteria",
-        "Doença de Chagas Aguda",
-        "Doença de Chagas Crônica",
-        "Doença de Creutzfeldt-Jakob (DCJ)",
-        "Doença Invasiva por 'Haemophilus Influenza'",
-        "Doença Meningocócica e outras meningites",
-        "Antraz pneumônico",
-        "Tularemia",
-        "Varíola",
-        "Doenças febris hemorrágicas emergentes: Arenavírus, Ebola, Marburg, Lassa, Febre purpúrica brasileira",
-        "Doença aguda pelo vírus Zika",
-        "Doença aguda pelo vírus Zika em gestante",
-        "Óbito com suspeita de doença pelo vírus Zika",
-        "Síndrome congênita associada à infecção pelo vírus Zika",
-        "Esquistossomose",
-        "Evento de Saúde Pública (ESP)",
-        "Eventos adversos graves ou óbitos pós vacinação",
-        "Febre Amarela",
-        "Febre de Chikungunya",
-        "Febre de Chikungunya em áreas sem transmissão",
-        "Óbito com suspeita de Febre de Chikungunya",
-        "Febre do Nilo Ocidental e outras arboviroses",
-        "Febre Maculosa e outras Riquetisioses",
-        "Febre Tifoide",
-        "Hanseníase",
-        "Hantavirose",
-        "Hepatites virais",
-        "HIV/AIDS - Infecção pelo Vírus da Imunodeficiência Humana",
-        "Infecção pelo HIV em gestante, parturiente ou puérpera",
-        "Infecção pelo Vírus da Imunodeficiência Humana (HIV)",
-        "Infecção pelo Vírus Linfotrópico de Células T Humanas (HTLV)",
-        "Infecção pelo HTLV em gestante, parturiente ou puérpera",
-        "Influenza humana produzida por novo subtipo viral",
-        "Intoxicação Exógena",
-        "Leishmaniose Tegumentar Americana",
-        "Leishmaniose Visceral",
-        "Leptospirose",
-        "Malária na região amazônica",
-        "Malária na região extra-Amazônica",
-        "Monkeypox (varíola dos macacos)",
-        "Óbito: Infantil, Materno",
-        "Poliomielite por poliovírus selvagem",
-        "Peste",
-        "Raiva humana",
-        "Síndrome da Rubéola Congênita",
-        "Doenças Exantemáticas: Sarampo, Rubéola",
-        "Sífilis: Adquirida, Congênita, Em gestante",
-        "Síndrome da Paralisia Flácida Aguda",
-        "Síndrome Inflamatória Multissistêmica em Adultos (SIM-A) associada à covid-19",
-        "Síndrome Inflamatória Multissistêmica Pediátrica (SIM-P) associada à covid-19",
-        "Síndrome Respiratória Aguda Grave (SRAG) associada a Coronavírus",
-        "Síndrome Gripal suspeita de covid-19",
-        "Tétano: Acidental, Neonatal",
-        "Toxoplasmose gestacional e congênita",
-        "Tuberculose",
-        "Varicela - caso grave internado ou óbito",
-        "Violência doméstica e/ou outras violências",
-        "Violência sexual e tentativa de suicídio",
-      ],
+      tabs: [{ nome: "Inicio" }, { nome: "Notificações" }],
     };
   },
   methods: {
@@ -139,5 +104,27 @@ export default defineComponent({
       leftDrawerOpen.value = !leftDrawerOpen.value;
     },
   },
+  computed: {
+    breadcrumbs() {
+      return this.$route.meta.breadcrumbs || [];
+    },
+  },
 });
 </script>
+
+<style lang="scss">
+.q-toolbar {
+  color: #3c3f50;
+  background-color: white;
+}
+
+.q-layout__section--marginal {
+  background-color: white;
+  color: var(--q-dark);
+}
+
+.toolbar-profile {
+  background-image: url("../assets/rosto-random.PNG");
+  background-size: cover;
+}
+</style>
