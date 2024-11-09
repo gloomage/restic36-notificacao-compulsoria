@@ -19,13 +19,6 @@
               <q-badge color="green" floating transparent> 5 </q-badge>
             </q-btn>
           </div>
-          <q-btn class="toolbar-profile" flat round dense size="18px">
-            <q-badge
-              color="green"
-              rounded
-              style="margin-top: 1.8rem; margin-left: 1.8rem"
-            />
-          </q-btn>
         </div>
       </q-toolbar>
       <q-separator />
@@ -51,15 +44,26 @@
     >
       <q-scroll-area
         style="
-          height: calc(100% - 150px);
-          margin-top: 150px;
+          height: calc(100% - 59px);
+          margin-top: 59px;
           border-right: 1px solid #ddd;
         "
       >
         <q-list padding>
-          <q-item clickable v-ripple v-for="tab in tabs" :key="tab.name">
+          <q-item
+            clickable
+            v-ripple
+            active-class="menu-drawer-ativo"
+            class="q-ma-sm"
+            tag="a"
+            exact
+            style="border-radius: 10px"
+            v-for="tab in tabs"
+            :key="tab.name"
+            :to="{ name: tab.url }"
+          >
             <q-item-section avatar>
-              <q-icon name="inbox" />
+              <q-icon :name="tab.icon" size="25px" />
             </q-item-section>
 
             <q-item-section> {{ tab.nome }} </q-item-section>
@@ -67,19 +71,43 @@
         </q-list>
       </q-scroll-area>
 
-      <q-img
-        class="absolute-top"
-        src="https://cdn.quasar.dev/img/material.png"
-        style="height: 150px"
+      <div
+        class="absolute-top flex"
+        style="
+          height: 59px;
+          border-right: 1px solid #ddd;
+          border-bottom: 1px solid #ddd;
+        "
       >
-        <div class="absolute-bottom bg-transparent">
-          <q-avatar size="56px" class="q-mb-sm">
-            <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
-          </q-avatar>
-          <div class="text-weight-bold">Razvan Stoenescu</div>
-          <div>@rstoenescu</div>
+        <div
+          class="q-ml-sm"
+          style="
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 60px;
+          "
+        >
+          <q-btn class="toolbar-profile" flat round size="14px" />
         </div>
-      </q-img>
+        <div
+          class="q-ml-sm"
+          style="
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+          "
+        >
+          <div style="font-weight: 600; color: var(--q-primary)">
+            Gael Jorge da Rocha
+          </div>
+          <div>gaeljorge@gmail.com</div>
+        </div>
+      </div>
     </q-drawer>
 
     <q-page-container>
@@ -96,7 +124,14 @@ export default defineComponent({
     return {
       leftDrawerOpen: false,
       search: "",
-      tabs: [{ nome: "Inicio" }, { nome: "Notificações" }],
+      tabs: [
+        { nome: "Inicio", icon: "fa-solid fa-gauge", url: "inicio" },
+        {
+          nome: "Notificações",
+          icon: "fa-solid fa-book",
+          url: "listagem_notificacoes",
+        },
+      ],
     };
   },
   methods: {
@@ -126,5 +161,11 @@ export default defineComponent({
 .toolbar-profile {
   background-image: url("../assets/rosto-random.PNG");
   background-size: cover;
+}
+
+.menu-drawer-ativo {
+  font-weight: bold;
+  background-color: #c7c7c76b;
+  color: $primary;
 }
 </style>
