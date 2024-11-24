@@ -5,7 +5,11 @@
         <div class="row full-width">
           <div class="col" style="font-weight: 600; font-size: 24px">Todos</div>
           <div class="col-auto flex">
-            <q-btn color="primary" label="Nova Notificação" />
+            <q-btn
+              color="primary"
+              label="Nova Notificação"
+              @click="novaNotificacao()"
+            />
             <q-input
               dense
               filled
@@ -42,6 +46,7 @@
 <script>
 import { defineComponent } from "vue";
 import ListTable from "components/ListTable.vue";
+import ModalDoencas from "components/modal/ModalDoencas.vue";
 
 export default defineComponent({
   name: "page_notificacao",
@@ -154,6 +159,16 @@ export default defineComponent({
     };
   },
   methods: {
+    novaNotificacao() {
+      this.$q
+        .dialog({
+          parent: this,
+          component: ModalDoencas,
+        })
+        .onOk((obj) => {
+          this.$router.push("notificacoes/novo");
+        });
+    },
     changePage(num_page) {
       this.current_page = num_page;
       this.fetchData();

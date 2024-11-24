@@ -1,7 +1,6 @@
 const routes = [
   {
     path: "/",
-
     meta: { titulo: "Dashboard", breadcrumbs: ["Início"] },
     component: () => import("layouts/MainLayout.vue"),
     children: [
@@ -32,7 +31,8 @@ const routes = [
                 meta: {
                   breadcrumbs: ["Início", "Notificações", "Nova Notificação"],
                 },
-                component: () => import("layouts/MainLayout.vue"),
+                component: () =>
+                  import("pages/notificacoes/NotificacoesForm.vue"),
               },
             ],
           },
@@ -41,6 +41,10 @@ const routes = [
     ],
   },
 
+  {
+    path: "/login",
+    component: () => import("pages/login/LoginPage.vue"),
+  },
   // Always leave this as last one,
   // but you can also remove it
   {
