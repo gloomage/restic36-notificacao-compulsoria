@@ -90,7 +90,9 @@
             width: 60px;
           "
         >
-          <q-btn class="toolbar-profile" flat round size="14px" />
+          <q-btn class="toolbar-profile" flat round size="14px">
+            <profile-menu />
+          </q-btn>
         </div>
         <div
           class="q-ml-sm"
@@ -118,7 +120,7 @@
 
 <script>
 import { defineComponent } from "vue";
-
+import ProfileMenu from "../components/menus/ProfileMenu.vue";
 export default defineComponent({
   data() {
     return {
@@ -133,6 +135,9 @@ export default defineComponent({
         },
       ],
     };
+  },
+  components: {
+    ProfileMenu,
   },
   methods: {
     toggleLeftDrawer() {
